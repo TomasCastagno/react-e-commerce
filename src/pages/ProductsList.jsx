@@ -65,7 +65,7 @@ const ProductsList = () => {
           <h1>List Products</h1>
           <Row xs={1} md={2} lg={3} className="g-4">
             {products.map(product => (
-              <Link to={`/product/${product.id}`} key={product.id} style={{textDecoration: 'none'}} >
+              <Link to={`/product/${product.id}`} key={product.id} style={{ textDecoration: 'none' }} >
                 <Col>
                   <Card >
                     <Card.Img variant="top" src={product.productImgs?.[0]} style={{ height: '300px', objectFit: 'contain' }} />
@@ -80,9 +80,7 @@ const ProductsList = () => {
                           $ {product.price}
                         </Card.Text>
 
-                        <Card.Link>
-                          Cart
-                        </Card.Link>
+                        <Button>Add to Cart</Button>
                       </Row>
 
                     </Card.Body>

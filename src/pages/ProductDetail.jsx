@@ -44,7 +44,7 @@ const ProductDetail = () => {
             <p>{productSelected?.description}</p>
             <p>Price <br />
               <b> ${productSelected.price} </b> </p>
-            <Button>Add to Card</Button>
+            <Button>Add to Cart</Button>
           </Col>
         </Row>
       </section>
