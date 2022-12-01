@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Button, Col, Form, InputGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import { addToCardThunk } from '../store/slices/cart.slice';
 import { getProductsThunk } from '../store/slices/products.slice';
 
 const ProductDetail = () => {
@@ -23,6 +24,17 @@ const ProductDetail = () => {
     &&
     (productSelected.id !== product.id)));
 
+  const [quantity, setQuantity] = useState(1);
+
+  const addToCart = () => {
+    const addedProduct = {
+      id,
+      quantity
+      }
+    dispatch(addToCardThunk(addedProduct))
+  }
+
+
 
   return (
     <div>
@@ -36,15 +48,30 @@ const ProductDetail = () => {
 
         <Row >
           <Col lg={6} className='col-md-offset-5'>
-      
-            <img src={productSelected?.productImgs[0]} alt='phone' className='img-fluid' style={{width: '500px'}} />
+
+            <img src={productSelected?.productImgs[0]} alt='phone' className='img-fluid' style={{ width: '500px' }} />
           </Col>
           <Col lg={6}>
             <h2>{productSelected?.title}</h2>
             <p>{productSelected?.description}</p>
             <p>Price <br />
-              <b> ${productSelected.price} </b> </p>
-            <Button>Add to Cart</Button>
+              <b> ${productSelected?.price} </b> </p>
+
+            <div className='quantity_addtocart'>
+              <InputGroup style={{ width: '100px', margin: '10px' }}>
+                <Button variant="primary"
+                  onClick={() => { quantity > 1 && setQuantity(quantity - 1) }}> - </Button>
+                <Form.Control
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+
+                />
+                <Button variant="primary"
+                  onClick={() => setQuantity(quantity + 1)}> + </Button>
+              </InputGroup>
+
+              <Button onClick={addToCart}>Add to Cart</Button>
+            </div>
           </Col>
         </Row>
       </section>
