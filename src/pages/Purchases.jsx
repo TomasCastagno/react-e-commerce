@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPurchasesThunk } from '../store/slices/purchases.slice';
@@ -19,23 +20,35 @@ const Purchases = () => {
 
   return (
     <div>
-      <h1>Ruta Purchases</h1>
+      <section>
+        <ul className='path-home-detail'>
+          <li><Link to='/'> Home </Link> </li>
+          <li>Purchases</li>
+        </ul>
+      </section>
+
+
+      <h1>My Purchases</h1>
 
       {
         purchases.map(purchased => (
-          <div key={purchased.id}>
 
-            {(purchased.createdAt).replace('T', '  ').slice(0, 20)}
-            <ul>
-              {(purchased.cart.products).map(product => (
-                <Link to={`/product/${product.id}`} key={product.id}>
-                  <li >{product?.title} ${product?.price} </li>
-                </Link>
+          <Card key={purchased.id}>
+            <Card.Header>{(purchased.createdAt).replace('T', '  ').slice(0, 20)}</Card.Header>
+            <Card.Body>
+              <blockquote className="blockquote mb-0">
+                <ul>
+                  {(purchased.cart.products).map(product => (
+                    <Link to={`/product/${product.id}`} key={product.id}>
+                      <li >{product?.title} ${product?.price} </li>
+                    </Link>
+                  ))}
+                </ul>
+              </blockquote>
+            </Card.Body>
+          </Card>
 
-              ))}
-            </ul>
 
-          </div>
         ))
       }
 

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Card, Col, Form, InputGroup, ListGroup, Row } from 'react-bootstrap';
+import { Button, Card, Carousel, Col, Form, InputGroup, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { addToCardThunk } from '../store/slices/cart.slice';
 import { filterProductsThunk, filterTitleThunk, getProductsThunk } from '../store/slices/products.slice';
 
 const ProductsList = () => {
@@ -22,7 +23,32 @@ const ProductsList = () => {
 
   const products = useSelector(state => state.products);
 
+  const cart = useSelector(state => state.cart);
+
   const [inputSearch, setInputSearch] = useState("");
+
+
+  //agregar productos al carrito
+
+
+  const quantity = 1;
+
+
+
+  const addToCart = (id) => {
+    const addedProduct = {
+      id,
+      quantity
+    };
+
+    if (cart.find(product => product.id === id)) {
+      alert("You already added this product to the cart")
+    } else {
+      dispatch(addToCardThunk(addedProduct))
+    }
+
+  }
+
 
 
   return (
@@ -65,35 +91,41 @@ const ProductsList = () => {
           <h1>List Products</h1>
           <Row xs={1} md={2} lg={3} className="g-4">
             {products.map(product => (
-              <Link to={`/product/${product.id}`} key={product.id} style={{ textDecoration: 'none' }} >
-                <Col>
-                  <Card >
-                    <Card.Img variant="top" src={product.productImgs?.[0]} style={{ height: '300px', objectFit: 'contain' }} />
-                    <Card.Body>
+
+              <Col key={product.id}>
+
+                <Card style={{ height: '22rem' }}>
+                <Link to={`/product/${product.id}`}> 
+                
+                <Carousel variant="dark">
+                    <Carousel.Item>
+                      <Card.Img variant="top" src={product.productImgs?.[0]} className='img-card-product' style={{ height: '50%', aspectRatio: "3/2" }} />
+                    </Carousel.Item>
+                    <Carousel.Item>
+                      <Card.Img variant="top" src={product.productImgs?.[1]} className='img-card-product' style={{ height: '50%', aspectRatio: "3/2" }} />
+                    </Carousel.Item>
+                  </Carousel>
+                </Link>
+                
+                  <Card.Body >
+                    <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }} >
                       <Card.Title>{product.title}</Card.Title>
-                      <Card.Text>
-                        Price
+                      <Card.Text style={{position: 'absolute', bottom: '10px', left: '10px' }}>
+                        Price <b> $ {product.price} </b>
                       </Card.Text>
 
-                      <Row>
-                        <Card.Text>
-                          $ {product.price}
-                        </Card.Text>
-
-                        <Button>Add to Cart</Button>
-                      </Row>
-
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Link>
+                    </Link>
+                    <Button onClick={() => addToCart(product.id)} style={{position: 'absolute', bottom: '10px', right: '20px' }}>
+                      <span className="material-symbols-outlined" style={{ margin: "auto" }}>
+                        add_shopping_cart
+                      </span></Button>
+                  </Card.Body>
+                </Card>
+              </Col>
             ))}
           </Row>
         </Col>
-      </Row>
-
-
-
+      </Row >
 
 
     </div >
