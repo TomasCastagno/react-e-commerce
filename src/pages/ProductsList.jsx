@@ -95,27 +95,27 @@ const ProductsList = () => {
               <Col key={product.id}>
 
                 <Card style={{ height: '22rem' }}>
-                <Link to={`/product/${product.id}`}> 
-                
-                <Carousel variant="dark">
-                    <Carousel.Item>
-                      <Card.Img variant="top" src={product.productImgs?.[0]} className='img-card-product' style={{ height: '50%', aspectRatio: "3/2" }} />
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <Card.Img variant="top" src={product.productImgs?.[1]} className='img-card-product' style={{ height: '50%', aspectRatio: "3/2" }} />
-                    </Carousel.Item>
-                  </Carousel>
-                </Link>
-                
+
+                  <Link to={`/product/${product.id}`}>
+                    <Carousel variant="dark">
+                      <Carousel.Item>
+                        <Card.Img variant="top" src={product.productImgs?.[0]} className='img-card-product' />
+                      </Carousel.Item>
+                      <Carousel.Item>
+                        <Card.Img variant="top" src={product.productImgs?.[1]} className='img-card-product' />
+                      </Carousel.Item>
+                    </Carousel>
+                  </Link>
+
                   <Card.Body >
                     <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }} >
                       <Card.Title>{product.title}</Card.Title>
-                      <Card.Text style={{position: 'absolute', bottom: '10px', left: '10px' }}>
+                      <Card.Text style={{ position: 'absolute', bottom: '10px', left: '10px' }}>
                         Price <b> $ {product.price} </b>
                       </Card.Text>
 
                     </Link>
-                    <Button onClick={() => addToCart(product.id)} style={{position: 'absolute', bottom: '10px', right: '20px' }}>
+                    <Button onClick={() => addToCart(product.id)} style={{ position: 'absolute', bottom: '10px', right: '20px' }}>
                       <span className="material-symbols-outlined" style={{ margin: "auto" }}>
                         add_shopping_cart
                       </span></Button>
